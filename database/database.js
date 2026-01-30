@@ -108,7 +108,7 @@ const connectDB = async () => {
             database: process.env.DB_DATABASE || "bauth",
             port: process.env.DB_PORT || 3306,
             ssl: process.env.DB_SSL === "true"
-                ? { rejectUnauthorized: true }
+                ? { rejectUnauthorized: false }
                 : false,
             multipleStatements: true,
             waitForConnections: true,
