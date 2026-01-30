@@ -11,8 +11,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 let DB_HEALTH = false;
 
+<<<<<<< HEAD
 app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
+=======
+app.use(cookieParser());
+app.use(cors({ origin: true, credentials: true }));
+>>>>>>> cc08ee2 (add bcryptjs dependency)
 app.use(bodyParser.json());
 app.set('trust proxy', true);
 (async () => {

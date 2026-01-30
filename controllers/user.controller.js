@@ -1,5 +1,5 @@
 const Users = require("../models/users");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const UAParser = require('ua-parser-js');
 const { getDB } = require("../database/database");
@@ -31,7 +31,7 @@ module.exports = {
             if (aggrement === false) return res.status(400).json({ success: false, message: `Please accept agreement to continue.`, field: "aggrement" });
 
             const db = getDB();
-            const postfix = isProduction ? `@${process.env.Production}` : "@localhost:5000"
+            const postfix = `@${process.env.Production}`
             const email = ValidUsername + postfix;
             const [exists] = await Users.findByUsername(username);
 
