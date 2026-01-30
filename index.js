@@ -8,7 +8,7 @@ const { connectDB } = require('./database/database');
 
 
 const app = express();
-const PORT = process.env.ENV_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 let DB_HEALTH = false;
 
 app.use(cors({ origin: true, credentials: true }));
