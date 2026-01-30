@@ -1,19 +1,14 @@
 const mysql = require("mysql2/promise");
-
-/* =========================
-   TABLE DEFINITIONS
-========================= */
-
 const createTablesSQL = `
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     username VARCHAR(100) UNIQUE NOT NULL,
-    postfix VARCHAR(50) DEFAULT '@example.com',
+    postfix VARCHAR(50) DEFAULT '@bauth.com',
     email VARCHAR(150) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    phone VARCHAR(20),
     password VARCHAR(255) NOT NULL,
-    dob DATE,
+    dob VARCHAR(255),
     gender ENUM('male','female','other'),
     photo VARCHAR(255),
     email_verified TINYINT(1) DEFAULT 0,
@@ -93,10 +88,6 @@ CREATE TABLE IF NOT EXISTS account_recovery (
 ) ENGINE=InnoDB;
 `;
 
-/* =========================
-   CONNECTION LOGIC
-========================= */
-
 let pool;
 
 const connectDB = async () => {
@@ -107,19 +98,17 @@ const connectDB = async () => {
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE || "bauth",
             port: process.env.DB_PORT || 3306,
-            ssl: process.env.DB_SSL === "true"
-                ? { rejectUnauthorized: false }
-                : false,
-            multipleStatements: true,
+            ssl: {
+                rejectUnauthorized: false
+            },
+
             waitForConnections: true,
-            connectionLimit: 10,
-            queueLimit: 0
+            connectionLimit: 20,
+            multipleStatements: true,
         });
 
-        // test connection
         await pool.query("SELECT 1");
 
-        // auto create tables
         const statements = createTablesSQL
             .split(";")
             .map(s => s.trim())
