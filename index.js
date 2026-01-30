@@ -11,40 +11,8 @@ const app = express();
 const PORT = process.env.ENV_PORT || 5000;
 let DB_HEALTH = false;
 
-const allowedOrigins = [
-    "http://localhost:3000",
-    "localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://sbb7308z-3000.inc1.devtunnels.ms/",
-];
-
-function isAllowed(origin) {
-    if (!origin) return true;
-
-    return allowedOrigins.some(allowed => {
-        if (allowed.includes("*")) {
-            const regex = new RegExp(
-                "^" + allowed.replace(/\*/g, ".*") + "$"
-            );
-            return regex.test(origin);
-        }
-        return allowed === origin;
-    });
-}
-
-app.use(cors({
-    origin: (origin, callback) => {
-        if (isAllowed(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("CORS not allowed"));
-        }
-    },
-    credentials: true
-}));
-
+app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
-// app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.json());
 app.set('trust proxy', true);
 (async () => {
