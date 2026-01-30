@@ -67,7 +67,7 @@ module.exports = {
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
                 secure: isProduction,
-                sameSite: "strict",
+                sameSite: "none",
                 maxAge: ACCESS_EXPIRE_SECONDS * 1000
             });
             return res.json({
@@ -137,7 +137,7 @@ module.exports = {
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
                 secure: isProduction,
-                sameSite: "strict",
+                sameSite: "none",
                 maxAge: ACCESS_EXPIRE_SECONDS * 1000
             });
 
@@ -181,7 +181,7 @@ module.exports = {
             const user = rows[0];
             res.json({
                 success: true,
-                username: `${user.username}${user.postfix}`,
+                username: user.email,
                 msg: "pending..."
             });
 
