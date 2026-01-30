@@ -66,9 +66,10 @@ module.exports = {
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: isProduction,
+                secure: true,
                 sameSite: "none",
-                maxAge: ACCESS_EXPIRE_SECONDS * 1000
+                maxAge: ACCESS_EXPIRE_SECONDS * 1000,
+                path: "/"
             });
             return res.json({
                 success: true,
@@ -136,9 +137,10 @@ module.exports = {
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: isProduction,
+                secure: true,
                 sameSite: "none",
-                maxAge: ACCESS_EXPIRE_SECONDS * 1000
+                maxAge: ACCESS_EXPIRE_SECONDS * 1000,
+                path: "/"
             });
 
 
