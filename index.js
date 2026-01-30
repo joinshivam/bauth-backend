@@ -10,7 +10,24 @@ const { connectDB } = require('./database/database');
 const app = express();
 const PORT = process.env.PORT || 5000;
 let DB_HEALTH = false;
-app.use(cors({ origin: true, credentials: true }));
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://sbb7308z-3000.inc1.devtunnels.ms",
+  "https://bauth-client.onrender.com"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true
+}));
+//app.use(cors({ origin: true, credentials: true }));
 app.use(cookieParser());
 app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
