@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Signup - Form</title>
+</head>
+<body>
+    <div class="container flex justify-center min-w-full h-screen">
+        <form id="step1" class="max-w-md w-full bg-white p-6 rounded-lg mt-10 shadow-md space-y-4">
+            <div class="flex items-center justify-center gap-4">
+                <!-- <img alt="Logo" width="40" height="40" src="favicon.png"> -->
+                <h1 class="text-center text-4xl py-5 uppercase">Signup</h1>
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Full Name</label>
+                <input autocomplete="off" autocorrect="false" autocapitalize="false" placeholder="Enter Full Name" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-400" type="text" value="" name="name">
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Username</label>
+                <input autocorrect="false" autocapitalize="false" autocomplete="off" aria-autocomplete="off" placeholder="Create username" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-400" type="text" value="" name="username">
+                <div class="text-red-500">
+
+                </div>
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Password</label>
+                <input autocomplete="off" placeholder="Create new password" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-400" type="password" value="" name="password">
+            </div>
+            <div class="flex items-center gap-2">
+                <input id="term_condition" type="checkbox" name="term_condition">
+                <label for="term_condition" class="text-gray-700 font-semibold">Accept Terms &amp; Conditions</label>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">next</button>
+            <div class="w-full text-blue-600 text-center cursor-pointer pt-4">Have a BillFusion account? Login here</div>
+        </form>
+        <form id="step2" class=" max-w-md w-full bg-white p-6 rounded-lg mt-10 shadow-md space-y-4">
+            <div class="flex items-center justify-center gap-4">
+                <!-- <img alt="Logo" width="40" height="40" src="favicon.png"> -->
+                <h1 class="text-center text-4xl py-5 uppercase">Signup</h1>
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Country code</label>
+                <select>
+                    <option value="+91" selected>+91 India</option>
+                </select>
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Phone Number</label>
+                <input autocomplete="off" placeholder="Enter you phone Number" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-400" type="phone" value="" name="phone">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">Create Account</button>
+            <div class="w-full text-blue-600 text-center cursor-pointer pt-4">Have a BillFusion account? Login here</div>
+        </form>
+        <form id="final_step" class=" max-w-md w-full bg-white p-6 rounded-lg mt-10 shadow-md space-y-4">
+            <div class="flex items-center justify-center gap-4">
+                <!-- <img alt="Logo" width="40" height="40" src="favicon.png"> -->
+                <h1 class="text-center text-4xl py-5 uppercase">Verify</h1>
+            </div>
+            <div style="text-align: left;">
+                <label class="block text-gray-700 font-semibold mb-1">Enter OTP</label>
+                <input autocomplete="off" autocorrect="false" autocapitalize="false" placeholder="Enter OTP" class="w-full px-4 py-2 border rounded-lg focus:ring-blue-400" type="text" value="" name="otp">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">Verify</button>
+        </form>
+    </div>
+</body>
+<script>
+    const form1 = document.getElementById("form1")
+    const form2 = document.getElementById("form2")
+    const form3 = document.getElementById("form3")
+  
+</script>
+</html>
