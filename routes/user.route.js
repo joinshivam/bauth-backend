@@ -14,6 +14,7 @@ router.post("/username-check", userController.username_check);
 // PROTECTED ROUTES
 router.post("/verify", userController.login);
 router.post("/me", auth, userController.getMe);
+router.get("/session-history",auth, userController.getSessions);
 router.get("/all", auth, userController.getAll);
 router.post("/logout", auth, userController.logout);
 
