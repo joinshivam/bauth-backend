@@ -287,6 +287,19 @@ module.exports = {
             return res.status(500).json({ error: err.message });
         }
     },
+    logoutAll: async (req, res) => {
+        try {
+            const token = req.cookies?.user_access;
+            const userId = req.users.id;
+            if (!token) return res.json({ success: false, message: "Unable to logout by this device" })
+            await Users.revokeSessionAll(token, userId);
+            res.clearCookie("user_access");
+            return res.json({ status: true, msg: "Logged out" });
+        } catch (err) {
+            console.error("USER_LOGOUT_ERROR:", err);
+            return res.status(500).json({ error: err.message });
+        }
+    },
      getSessions: async (req, res) => {
         try {
             const userId = req.users.id;
