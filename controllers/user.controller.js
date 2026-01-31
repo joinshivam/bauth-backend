@@ -12,7 +12,7 @@ const ACCESS_EXPIRE_SECONDS = parseInt(process.env.ACCESS_TOKEN_EXPIRES) * 60;
 const isProduction = process.env.ENV !== "production";
 module.exports = {
     // Curd - c
-    register: async (req, res) => {
+     register: async (req, res) => {
         try {
             let { name, dob, gender, username, password, aggrement } = req.body;
             const parser = new UAParser(req.headers['user-agent']);
@@ -31,8 +31,7 @@ module.exports = {
             if (aggrement === false) return res.status(400).json({ success: false, message: `Please accept agreement to continue.`, field: "aggrement" });
 
             const db = getDB();
-            const postfix = `@${process.env.Production}`
-            const email = ValidUsername + postfix;
+            const postfix = `@${process.env.Production || "onemb.com"}`
             const [exists] = await Users.findByUsername(username);
 
             if (exists.length > 0) {
@@ -42,6 +41,7 @@ module.exports = {
                     field: "username"
                 });
             }
+            const email = ValidUsername + postfix;
             const hashedPassword = await bcrypt.hash(ValidPassword, 10);
 
             const [Result] = await db.query(
@@ -57,19 +57,18 @@ module.exports = {
             const accessToken = createAccessToken({ id: user.id, email: Email });
 
             const SESSION = await Users.setSession({ id: user.id, accessToken: accessToken, agent: USER_AGENT, ip: USER_IP });
-            if (SESSION !== user.id) {
+            if (!SESSION) {
                 return res.json({
                     ok: false,
                     field: "global",
-                    message: "Unable to Create Account Session error"
+                    message: "Unable to Create Session"
                 })
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: true,
+                secure: false,
                 sameSite: "none",
-                maxAge: ACCESS_EXPIRE_SECONDS * 1000,
-                path: "/"
+                maxAge: ACCESS_EXPIRE_SECONDS * 1000
             });
             return res.json({
                 success: true,
