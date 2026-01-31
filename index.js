@@ -18,7 +18,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5173",
   "https://sbb7308z-3000.inc1.devtunnels.ms",
-  "https://bauth-client.onrender.com"
+  "https://bauth-client.onrender.com",
+  "https://joinshivam-global-chat.vercel.app/chat"
 ];
 
 app.use(cors({
