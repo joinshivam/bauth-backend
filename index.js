@@ -51,6 +51,9 @@ app.set('trust proxy', true);
         });
     }
 })()
+app.get("/", (req, res) => {
+  res.status(200).send("OK");
+});
 
 app.use("/api/health", (req, res) => {
     try {
