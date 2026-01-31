@@ -287,6 +287,29 @@ module.exports = {
             return res.status(500).json({ error: err.message });
         }
     },
+     getSessions: async (req, res) => {
+        try {
+            const userId = req.users.id;
+            const limit = Number(req.query.limit || 5);
+
+            const [rows] = await Users.findSessionsByUser(userId, limit);
+
+            return res.json({
+                success: true,
+                limit: limit,
+                total: rows.length,
+                sessions: rows
+            });
+
+        } catch (err) {
+            console.error("GET_SESSIONS_ERROR:", err);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch sessions"
+            });
+        }
+    }
+    ,
 
     //---------- CUrd - u
     updateName: async (req, res) => {
