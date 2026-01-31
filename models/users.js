@@ -241,6 +241,22 @@ const Users = {
             return err;
         }
     },
+    revokeSessionAll: async (token, user_id) => {
+        try {
+            if (token === 0 || !token || user_id === "") {
+                return `unable to logout from this device `;
+            }
+            const db = await getDB();
+            const Session = await db.query(
+                "UPDATE user_sessions SET `revoked` = '1' WHERE user_id = ?",
+                [user_id]
+            )
+            return Session.affectedRows;
+        } catch (err) {
+            console.log("Session REVOKED ERR:", err);
+            return err;
+        }
+    },
     validateName: (name) => {
         const ValidName = name?.toLowerCase().trim();
         const nameRegex = /^[A-Za-z]+(?:\s[A-Za-z]+)*$/;
