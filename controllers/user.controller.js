@@ -10,7 +10,7 @@ const createAccessToken = () => {
     return crypto.randomBytes(32).toString("hex");
 };
 const ACCESS_EXPIRE_SECONDS = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600m") * 60;
-const isProduction = process.env.EVN === "production";
+const isProduction = process.env.ENV === "production";
 module.exports = {
     // Curd - c
     register: async (req, res) => {
@@ -68,7 +68,7 @@ module.exports = {
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
                 secure: isProduction,
-                sameSite: isProduction ? "none" : "lax",
+                sameSite: "none",
                 maxAge: ACCESS_EXPIRE_SECONDS * 1000,
                 path: "/"
             });
