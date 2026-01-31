@@ -187,6 +187,17 @@ const Users = {
 
   return rows[0] || null;
 },
+    findSessionsByUser: async (userId, limit = 10) => {
+        const db = getDB();
+
+        return db.query(
+            `(SELECT id , user_agent, ip_address, revoked, created_at, created_at FROM user_sessions WHERE user_id = ? AND revoked = 0 ORDER BY created_at DESC)
+            UNION ALL
+            (SELECT id, user_agent, ip_address, revoked, created_at, expires_at FROM user_sessions WHERE user_id = ? AND revoked != 0 ORDER BY created_at DESC LIMIT ? )
+            ORDER BY created_at DESC`,
+            [userId, userId, limit]
+        );
+    },
     revokeSession: async (token) => {
         try {
             if (token === 0 || !token) {
