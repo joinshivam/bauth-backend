@@ -4,15 +4,16 @@ const crypto = require("crypto");
 const UAParser = require('ua-parser-js');
 const { getDB } = require("../database/database");
 const { replacePhoto } = require("../utils/avtar");
+const path = require("path");
 
 const createAccessToken = () => {
     return crypto.randomBytes(32).toString("hex");
 };
-const ACCESS_EXPIRE_SECONDS = parseInt(process.env.ACCESS_TOKEN_EXPIRES) * 60;
-const isProduction = process.env.ENV !== "production";
+const ACCESS_EXPIRE_SECONDS = parseInt(process.env.ACCESS_TOKEN_EXPIRES || "3600m") * 60;
+const isProduction = process.env.EVN === "production";
 module.exports = {
     // Curd - c
-     register: async (req, res) => {
+    register: async (req, res) => {
         try {
             let { name, dob, gender, username, password, aggrement } = req.body;
             const parser = new UAParser(req.headers['user-agent']);
@@ -31,7 +32,7 @@ module.exports = {
             if (aggrement === false) return res.status(400).json({ success: false, message: `Please accept agreement to continue.`, field: "aggrement" });
 
             const db = getDB();
-            const postfix = `@${process.env.Production || "onemb.com"}`
+            const postfix = `@${process.env.DOMAIN || "onemb.com"}`
             const [exists] = await Users.findByUsername(username);
 
             if (exists.length > 0) {
@@ -66,8 +67,8 @@ module.exports = {
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "none",
+                secure: isProduction,
+                sameSite: isProduction ? "none" : "lax",
                 maxAge: ACCESS_EXPIRE_SECONDS * 1000,
                 path: "/"
             });
@@ -125,7 +126,6 @@ module.exports = {
             if (!match) return res.status(400).json({ field: "password", success: false, msg: "Incorrect password" });
 
             const accessToken = createAccessToken({ id: user.id, email: user?.email });
-            const isProduction = process.env.ENV === "production";
 
             const SESSION = await Users.setSession({ id: user.id, accessToken: accessToken, agent: USER_AGENT, ip: USER_IP });
             if (!SESSION) {
@@ -137,8 +137,8 @@ module.exports = {
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "none",
+                secure: isProduction,
+                sameSite: isProduction ? "none" : "lax",
                 maxAge: ACCESS_EXPIRE_SECONDS * 1000,
                 path: "/"
             });
@@ -194,8 +194,8 @@ module.exports = {
     },
     verify: async (req, res) => {
         try {
-            const { username, phone, session_token, otp } = req.body;
-            if (otp === otp) {
+            const { otp } = req.body;
+            if (otp === "otp") {
                 console.log("Verified account");
             }
         } catch (err) {
