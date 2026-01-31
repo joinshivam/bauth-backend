@@ -10,15 +10,15 @@ module.exports = {
                     message: `Method not allowed ${token}`
                 })
             }
-            const [sessions] = await Users.getSessionByToken(token);
-            if (!sessions || sessions.length === 0) {
+            const sessions = await Users.getSessionByToken(token);
+            if (!sessions) {
                 res.clearCookie("user_access");
                 return res.status(401).json({
                     ok: false,
                     message: "Session expired or revoked"
                 });
             }
-            const session = sessions[0];
+            const session = sessions;
             if (!session) {
                 return res.status(401).json({
                     ok: false,
