@@ -17,6 +17,7 @@ router.post("/me", auth, userController.getMe);
 router.get("/session-history",auth, userController.getSessions);
 router.get("/all", auth, userController.getAll);
 router.post("/logout", auth, userController.logout);
+router.get("/logout-all", auth, userController.logoutAll);
 
 // UPDATE PROFILE ROUTES
 router.put("/update-name", auth, userController.updateName);
