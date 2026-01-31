@@ -66,9 +66,10 @@ module.exports = {
             }
             res.cookie("user_access", accessToken, {
                 httpOnly: true,
-                secure: false,
+                secure: true,
                 sameSite: "none",
-                maxAge: ACCESS_EXPIRE_SECONDS * 1000
+                maxAge: ACCESS_EXPIRE_SECONDS * 1000,
+                path: "/"
             });
             return res.json({
                 success: true,
