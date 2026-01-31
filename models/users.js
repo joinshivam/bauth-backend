@@ -162,7 +162,7 @@ const Users = {
     },
      setSession: async ({ id, accessToken, agent, ip, expire = ACCESS_TOTKEN_Expire }) => {
         if (id === "" || !accessToken || !agent || ip === "") {
-            throw new Error("Invalid session set parameters");
+            throwError("Invalid session set parameters");
         }
         const db = await getDB();
         const [Session] = await db.query(
@@ -173,24 +173,20 @@ const Users = {
         return Session.insertId || null;
     },
     getSessionByToken: async (token) => {
-        try {
-            if (token === 0 || !token) {
-                throw new Error("Invalid session get parameters");
-            }
-            const db = await getDB();
-            const [Session] = await db.query(
-                `SELECT * FROM user_sessions WHERE session_token = ? AND revoked = 0 AND expires_at > NOW() LIMIT 1;`,
-                [token]
-            )
-            if (!Session || Session.length === 0) {
-                throw new Error("Session not found");
-            }
-            return Session[0] || null;
-        } catch (err) {
-            console.log("Session SET ERR:", err);
-            throw err;
-        }
-    },
+  if (!token) return null;
+
+  const db = await getDB();
+  const [rows] = await db.query(
+    `SELECT * FROM user_sessions
+     WHERE session_token = ?
+     AND revoked = 0
+     AND expires_at > NOW()
+     LIMIT 1`,
+    [token]
+  );
+
+  return rows[0] || null;
+},
     revokeSession: async (token) => {
         try {
             if (token === 0 || !token) {
