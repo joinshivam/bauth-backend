@@ -16,10 +16,10 @@ const server = http.createServer(app);
 let DB_HEALTH = false;
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://joinshivam-bauth.vercel.app/",
+  "https://joinshivam-bauth.vercel.app",
   "https://sbb7308z-3000.inc1.devtunnels.ms",
   "https://bauth-client.onrender.com",
-  "https://joinshivam-global-chat.vercel.app/chat"
+  "https://joinshivam-global-chat.vercel.app"
 ];
 
 app.use(cors({
